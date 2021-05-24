@@ -143,6 +143,7 @@ namespace BirdsiteLive.Controllers
                         {
                             var succeeded = await _userService.FollowRequestedAsync(signature, r.Method, r.Path,
                                 r.QueryString.ToString(), RequestHeaders(r.Headers), activity as ActivityFollow, body);
+
                             if (succeeded) return Accepted();
                             else return Unauthorized();
                         }
