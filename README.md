@@ -1,3 +1,12 @@
+This project is a *fork* of [the original BirdsiteLIVE from NicolasConstant](https://github.com/NicolasConstant/BirdsiteLive). Changes made in this fork include:
+
+* Rework About page
+* Cache Tweets so that, for example, Announces do not hit rate limits
+
+This fork is also available as a Docker image as `pasture/birdsitelive`.
+
+The project's original README is as follows:
+
 ![Test](https://github.com/NicolasConstant/BirdsiteLive/workflows/.NET%20Core/badge.svg?branch=master&event=push)
 
 # BirdsiteLIVE
