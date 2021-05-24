@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BirdsiteLive.Common.Settings;
 using BirdsiteLive.DAL.Contracts;
@@ -37,7 +38,8 @@ namespace BirdsiteLive.Services
                 _cachedStatistics = new CachedStatistics
                 {
                     RefreshedTime = DateTime.UtcNow,
-                    Saturation = saturation
+                    Saturation = saturation,
+                    UnlistedUsers = _instanceSettings.UnlistedTwitterAccounts.Length > 0 ? string.Join("\n", _instanceSettings.UnlistedTwitterAccounts.Split(";").Select(i => "<li>" + i + "</li>")) : "(none)"
                 };
             }
 
@@ -49,5 +51,6 @@ namespace BirdsiteLive.Services
     {
         public DateTime RefreshedTime { get; set; }
         public int Saturation { get; set; }
+        public string UnlistedUsers { get; set; }
     }
 }
