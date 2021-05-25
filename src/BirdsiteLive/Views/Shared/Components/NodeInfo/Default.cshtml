@@ -11,7 +11,7 @@
     }
 
     <div class="node-progress-bar">
-        <div class="node-progress-bar__label"><a asp-controller="About" asp-action="Index">Instance saturation:</a></div>
+        <div class="node-progress-bar__label"><a asp-controller="About" asp-action="Index" asp-fragment="saturation">Instance saturation:</a></div>
         <div class="progress node-progress-bar__bar">
             <div class="progress-bar 
                  @((ViewData.Model.InstanceSaturation > 50 && ViewData.Model.InstanceSaturation < 75) ? "bg-warning ":"")

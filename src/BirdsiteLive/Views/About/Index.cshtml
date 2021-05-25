@@ -4,32 +4,42 @@
 }
 
 <div class="col-12 col-sm-12 col-md-10 col-lg-8 mx-auto">
-    <h4>Node Saturation</h4>
+    <h1>About</h1>
+
+    <h4>What is this site?</h4>
 
     <p>
-        <br/>
-        This instance's saturation level is currently at @Model.Saturation%.<br/><br />
-        
-        This instance relies on the Twitter API - a tool developers can use to integrate Twitter with other applications - to fetch and send Tweets in a predictable and high-quality manner. However, the API has rate limits; this instance can only fetch so many Tweets and users per hour.<br /><br />
+        This site runs an instance of BirdsiteLIVE, an <a href="https://activitypub.rocks" target="_blank">ActivityPub</a>-compatible <a href="https://en.wikipedia.org/wiki/Fediverse" target="_blank">Fediverse</a> server that delivers Tweets from Twitter to users on the Fediverse.
+
+        <br /><br />
+
+        BirdsiteLIVE does not make any public posts; every post is scoped appropriately using the "followers-only" or "unlisted" ActivityPub audiences. See "Why do accounts I follow on this node post followers-only?", below.
+    </p>
+
+    <h4 id="followers-only">Why do accounts I follow on this node post followers-only?</h4>
+
+    <p>
+
+        The goal of this instance is <i>not</i> to make the Fediverse "Twitter 2"; it is to make the Fediverse easier to join by allowing people to follow those who will never move. Therefore, by default, Twitter posts are not shown publicly. This instance's admin may allow certain accounts to post using the unlisted audience; this allows an account's posts to be "boosted" or "repeated."
+
+        <br /><br />
+
+        Accounts that post using the "unlisted" audience are as follows:
+
+        <ul>
+            @Html.Raw(Model.UnlistedUsers)
+        </ul>
+    </p>
+
+    <h4 id="saturation">What does "instance saturation" mean?</h4>
+
+    <p>
+        This instance's saturation level is currently at @Model.Saturation%.<br /><br />
+
+        This instance relies on a tool Twitter provides (the API) to fetch Tweets in a predictable and high-quality manner. However, due to limits imposed by Twitter, this instance can only fetch so many Tweets and users per hour.<br /><br />
 
         As this instance's saturation level approaches and exceeds 100%, it will no longer update accounts every 15 minutes and reduce how often it fetches Tweets to stay under Twitter's limits. Essentially, the more saturated a node is, the less efficient it will be.<br /><br />
 
-        When possible, you should <a href="https://github.com/NicolasConstant/BirdsiteLive/blob/master/INSTALLATION.md" target="_blank">start your own BirdsiteLIVE instance</a>. If you cannot, please be courteous and follow a limited number of accounts to keep the service available for everyone.
-        <br/>
+        When possible, you should <a href="https://git.gamers.exposed/pasture/BirdsiteLIVE/src/branch/master/INSTALLATION.md" target="_blank">start your own BirdsiteLIVE instance</a>. If you cannot, please be courteous and follow a limited number of accounts to keep the service available for everyone.
     </p>
-
-    <h4>Why do accounts I follow on this node post followers-only?</h4>
-
-    <p>
-        
-        The goal of this instance is <i>not</i> to make the Fediverse "Twitter 2"; it is to make the Fediverse easier to join by allowing people to follow those who will never move. This instance's admin may allow certain accounts to post in "unlisted" scope, allowing posts from these accounts to be replied to or re-posted publicly. Regardless of an account's status, it can still be followed.
-    
-        <br /><br />
-
-        Accounts that post using the "unlisted" scope are as follows:
-    </p>
-
-    <ul>
-        @Html.Raw(Model.UnlistedUsers)
-    </ul>
 </div>
