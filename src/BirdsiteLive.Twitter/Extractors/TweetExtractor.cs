@@ -50,7 +50,10 @@ namespace BirdsiteLive.Twitter.Extractors
             {
                 if (tweet.RetweetedTweet != null)
                 {
-                    return tweet.RetweetedTweet.Url;
+                    var uri = new UriBuilder(tweet.RetweetedTweet.Url);
+                    uri.Host = _instanceSettings.TwitterDomain;
+
+                    return uri.Uri.ToString();
                 }
                 if (tweet.FullText.Contains("https://t.co/"))
                 {
