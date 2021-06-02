@@ -120,7 +120,7 @@ namespace BirdsiteLive.Controllers
                 }
             }
 
-            return Redirect($"https://twitter.com/{id}/status/{statusId}");
+            return Redirect($"https://{_instanceSettings.TwitterDomain}/{id}/status/{statusId}");
         }
 
         [Route("/users/{id}/inbox")]

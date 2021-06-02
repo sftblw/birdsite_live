@@ -2,6 +2,7 @@ This project is a *fork* of [the original BirdsiteLIVE from NicolasConstant](htt
 
 * Rework About page
 * Cache Tweets so that, for example, Announces do not hit rate limits
+* Allow replacing and redirecting to twitter.com in Tweets to other domains (i.e. Nitter instances)
 
 This fork is also available as a Docker image as `pasture/birdsitelive`.
 

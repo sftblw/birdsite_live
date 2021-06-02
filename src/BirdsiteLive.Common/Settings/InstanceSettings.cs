@@ -10,5 +10,7 @@
         public int MaxUsersCapacity { get; set; }
 
         public string UnlistedTwitterAccounts { get; set; }
+
+        public string TwitterDomain { get; set; }
     }
 }

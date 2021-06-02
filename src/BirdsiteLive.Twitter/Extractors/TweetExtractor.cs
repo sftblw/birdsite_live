@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BirdsiteLive.Common.Settings;
 using BirdsiteLive.Twitter.Models;
 using Tweetinvi.Models;
 using Tweetinvi.Models.Entities;
@@ -15,6 +16,15 @@ namespace BirdsiteLive.Twitter.Extractors
 
     public class TweetExtractor : ITweetExtractor
     {
+        private readonly InstanceSettings _instanceSettings;
+
+        #region Ctor
+        public TweetExtractor(InstanceSettings instanceSettings)
+        {
+            this._instanceSettings = instanceSettings;
+        }
+        #endregion
+
         public ExtractedTweet Extract(ITweet tweet)
         {
             var extractedTweet = new ExtractedTweet
@@ -84,7 +94,17 @@ namespace BirdsiteLive.Twitter.Extractors
 
             // Expand URLs
             foreach (var url in tweet.Urls.OrderByDescending(x => x.URL.Length))
+            {
+                var linkUri = new UriBuilder(url.ExpandedURL);
+
+                if (linkUri.Host == "twitter.com")
+                {
+                    linkUri.Host = _instanceSettings.TwitterDomain;
+                    url.ExpandedURL = linkUri.Uri.ToString();
+                }
+
                 message = message.Replace(url.URL, url.ExpandedURL);
+            }
 
             return message;
         }
