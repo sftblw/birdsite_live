@@ -48,6 +48,7 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:PublishReplies` (default: false) to enable or disable replies publishing.
 * `Instance:UnlistedTwitterAccounts` (default: null) to enable unlisted publication for selected twitter accounts, separated by `;` (please limit this to brands and other public profiles).
 * `Instance:TwitterDomain` (default: twitter.com) redirect to a different domain (i.e. a Nitter instance) instead of Twitter
+* `Instance:InfoBanner` (default: '') text to show in a banner on the front page
 
 # Docker Compose full example
 
@@ -80,6 +81,7 @@ services:
 +           - Instance:PublishReplies=true
 +           - Instance:UnlistedTwitterAccounts=cocacola;twitter
 +           - Instance:TwitterDomain=twiiit.com
++           - Instance:InfoBanner=This is my BirdsiteLIVE instance. There are many like it, but this one is mine.
         networks:
         [...]
 

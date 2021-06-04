@@ -12,5 +12,7 @@
         public string UnlistedTwitterAccounts { get; set; }
 
         public string TwitterDomain { get; set; }
+
+        public string InfoBanner { get; set; }
     }
 }
