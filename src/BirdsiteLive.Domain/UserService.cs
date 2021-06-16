@@ -75,6 +75,31 @@ namespace BirdsiteLive.Domain
                 _statisticsHandler.ExtractedDescription(extracted.tags.Count(x => x.type == "Mention"));
             }
 
+            var attachments = new List<UserAttachment>();
+            attachments.Add(new UserAttachment
+            {
+                type = "PropertyValue",
+                name = _instanceSettings.TwitterDomain,
+                value = $"<a href=\"https://{_instanceSettings.TwitterDomain}/{acct}\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"ellipsis\">{_instanceSettings.TwitterDomain}/{acct}</span></a>"
+            });
+
+            if(_instanceSettings.TwitterDomain != "twitter.com")
+            {
+                attachments.Add(new UserAttachment
+                {
+                    type = "PropertyValue",
+                    name = "Twitter",
+                    value = $"twitter.com/{acct}"
+                });
+            }
+
+            attachments.Add(new UserAttachment
+            {
+                type = "PropertyValue",
+                name = $"About {_instanceSettings.Name}",
+                value = $"<a href=\"https://{_instanceSettings.Domain}/About\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"ellipsis\">{_instanceSettings.Domain}/About</span></a>"
+            });
+
             var user = new Actor
             {
                 id = actorUrl,
@@ -102,15 +127,7 @@ namespace BirdsiteLive.Domain
                     mediaType = "image/jpeg",
                     url = twitterUser.ProfileBannerURL
                 },
-                attachment = new []
-                {
-                    new UserAttachment
-                    {
-                        type = "PropertyValue",
-                        name = "Official",
-                        value = $"<a href=\"https://twitter.com/{acct}\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"ellipsis\">twitter.com/{acct}</span></a>"
-                    }
-                },
+                attachment = attachments.ToArray(),
                 endpoints = new EndPoints
                 {
                     sharedInbox = $"https://{_instanceSettings.Domain}/inbox"
