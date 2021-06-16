@@ -47,8 +47,10 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:ResolveMentionsInProfiles` (default: true) to enable or disable mentions parsing in profile's description. Resolving it will consume more User's API calls since newly discovered account can also contain references to others accounts as well. On a big instance it is recommended to disable it.
 * `Instance:PublishReplies` (default: false) to enable or disable replies publishing.
 * `Instance:UnlistedTwitterAccounts` (default: null) to enable unlisted publication for selected twitter accounts, separated by `;` (please limit this to brands and other public profiles).
-* `Instance:TwitterDomain` (default: twitter.com) redirect to a different domain (i.e. a Nitter instance) instead of Twitter
-* `Instance:InfoBanner` (default: '') text to show in a banner on the front page
+* `Instance:TwitterDomain` (default: twitter.com) redirect to a different domain (i.e. a Nitter instance) instead of Twitter in most areas
+* `Instance:TwitterDomainLabel` (default: "") if TwitterDomain is set, use this label on profile pages instead of the domain itself (i.e. you can set this to "Nitter" to show that on profiles instead of "twiiit.com")
+* `Instance:InfoBanner` (default: "") text to show in a banner on the front page
+* `Instance:ShowAboutInstanceOnProfiles` (default: true) show "About [instance name]" on profiles with a link to /About
 
 # Docker Compose full example
 
@@ -81,7 +83,9 @@ services:
 +           - Instance:PublishReplies=true
 +           - Instance:UnlistedTwitterAccounts=cocacola;twitter
 +           - Instance:TwitterDomain=twiiit.com
++           - Instance:TwitterDomainLabel=Nitter
 +           - Instance:InfoBanner=This is my BirdsiteLIVE instance. There are many like it, but this one is mine.
++           - Instance:ShowAboutInstanceOnProfiles=true
         networks:
         [...]
 

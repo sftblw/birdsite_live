@@ -14,5 +14,10 @@
         public string TwitterDomain { get; set; }
 
         public string InfoBanner { get; set; }
+
+        public string TwitterDomainLabel { get; set; }
+
+        public bool ShowAboutInstanceOnProfiles { get; set; }
+
     }
 }

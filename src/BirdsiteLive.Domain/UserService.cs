@@ -79,7 +79,7 @@ namespace BirdsiteLive.Domain
             attachments.Add(new UserAttachment
             {
                 type = "PropertyValue",
-                name = _instanceSettings.TwitterDomain,
+                name = _instanceSettings.TwitterDomainLabel != "" ? _instanceSettings.TwitterDomainLabel : _instanceSettings.TwitterDomain,
                 value = $"<a href=\"https://{_instanceSettings.TwitterDomain}/{acct}\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"ellipsis\">{_instanceSettings.TwitterDomain}/{acct}</span></a>"
             });
 
@@ -93,12 +93,15 @@ namespace BirdsiteLive.Domain
                 });
             }
 
-            attachments.Add(new UserAttachment
+            if (_instanceSettings.ShowAboutInstanceOnProfiles)
             {
-                type = "PropertyValue",
-                name = $"About {_instanceSettings.Name}",
-                value = $"<a href=\"https://{_instanceSettings.Domain}/About\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"ellipsis\">{_instanceSettings.Domain}/About</span></a>"
-            });
+                attachments.Add(new UserAttachment
+                {
+                    type = "PropertyValue",
+                    name = $"About {_instanceSettings.Name}",
+                    value = $"<a href=\"https://{_instanceSettings.Domain}/About\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"ellipsis\">{_instanceSettings.Domain}/About</span></a>"
+                });
+            }
 
             var user = new Actor
             {
