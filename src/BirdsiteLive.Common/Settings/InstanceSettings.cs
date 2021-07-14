@@ -19,5 +19,7 @@
 
         public bool ShowAboutInstanceOnProfiles { get; set; }
 
+        public int MaxFollowsPerUser { get; set; }
+
     }
 }

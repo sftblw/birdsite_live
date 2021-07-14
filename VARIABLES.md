@@ -51,6 +51,7 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:TwitterDomainLabel` (default: "") if TwitterDomain is set, use this label on profile pages instead of the domain itself (i.e. you can set this to "Nitter" to show that on profiles instead of "twiiit.com")
 * `Instance:InfoBanner` (default: "") text to show in a banner on the front page
 * `Instance:ShowAboutInstanceOnProfiles` (default: true) show "About [instance name]" on profiles with a link to /About
+* `Instance:MaxFollowsPerUser` (default: 0 - no limit) limit the number of follows per user - any follow count above this number will be Rejected
 
 # Docker Compose full example
 

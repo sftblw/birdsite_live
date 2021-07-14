@@ -10,6 +10,7 @@ using BirdsiteLive.ActivityPub.Converters;
 using BirdsiteLive.Common.Regexes;
 using BirdsiteLive.Common.Settings;
 using BirdsiteLive.Cryptography;
+using BirdsiteLive.DAL.Contracts;
 using BirdsiteLive.Domain.BusinessUseCases;
 using BirdsiteLive.Domain.Repository;
 using BirdsiteLive.Domain.Statistics;
@@ -45,8 +46,10 @@ namespace BirdsiteLive.Domain
 
         private readonly IModerationRepository _moderationRepository;
 
+        private readonly IFollowersDal _followerDal;
+
         #region Ctor
-        public UserService(InstanceSettings instanceSettings, ICryptoService cryptoService, IActivityPubService activityPubService, IProcessFollowUser processFollowUser, IProcessUndoFollowUser processUndoFollowUser, IStatusExtractor statusExtractor, IExtractionStatisticsHandler statisticsHandler, ITwitterUserService twitterUserService, IModerationRepository moderationRepository)
+        public UserService(InstanceSettings instanceSettings, ICryptoService cryptoService, IActivityPubService activityPubService, IProcessFollowUser processFollowUser, IProcessUndoFollowUser processUndoFollowUser, IStatusExtractor statusExtractor, IExtractionStatisticsHandler statisticsHandler, ITwitterUserService twitterUserService, IModerationRepository moderationRepository, IFollowersDal followerDal)
         {
             _instanceSettings = instanceSettings;
             _cryptoService = cryptoService;
@@ -57,6 +60,7 @@ namespace BirdsiteLive.Domain
             _statisticsHandler = statisticsHandler;
             _twitterUserService = twitterUserService;
             _moderationRepository = moderationRepository;
+            _followerDal = followerDal;
         }
         #endregion
 
@@ -175,6 +179,16 @@ namespace BirdsiteLive.Domain
                 if (twitterAccountModPolicy == ModerationTypeEnum.WhiteListing && twitterUserStatus != ModeratedTypeEnum.WhiteListed ||
                     twitterAccountModPolicy == ModerationTypeEnum.BlackListing && twitterUserStatus == ModeratedTypeEnum.BlackListed)
                     return await SendRejectFollowAsync(activity, followerHost);
+            }
+
+            // Validate follower count < MaxFollowsPerUser
+            if (_instanceSettings.MaxFollowsPerUser > 0) {
+                var follower = await _followerDal.GetFollowerAsync(followerUserName, followerHost);
+
+                if (follower != null && follower.Followings.Count + 1 > _instanceSettings.MaxFollowsPerUser)
+                {
+                    return await SendRejectFollowAsync(activity, followerHost);
+                }
             }
 
             // Validate User Protected
