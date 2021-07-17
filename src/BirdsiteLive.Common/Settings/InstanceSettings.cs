@@ -21,5 +21,7 @@
 
         public int MaxFollowsPerUser { get; set; }
 
+        public bool DiscloseInstanceRestrictions { get; set; }
+
     }
 }
