@@ -52,6 +52,7 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:InfoBanner` (default: "") text to show in a banner on the front page
 * `Instance:ShowAboutInstanceOnProfiles` (default: true) show "About [instance name]" on profiles with a link to /About
 * `Instance:MaxFollowsPerUser` (default: 0 - no limit) limit the number of follows per user - any follow count above this number will be Rejected
+* `Instance:DiscloseInstanceRestrictions` (default: false) disclose your instance's restrictions on its About page
 
 # Docker Compose full example
 
