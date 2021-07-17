@@ -6,6 +6,20 @@
 <div class="col-12 col-sm-12 col-md-10 col-lg-8 mx-auto">
     <h1>About</h1>
 
+    @if (Model.Settings.MaxFollowsPerUser > 0)
+    {
+        <div class="alert alert-warning">
+            In order to keep this service available to everyone, users are only permitted to follow <b>@Model.Settings.MaxFollowsPerUser</b> account(s). Any additional follows will be rejected.
+        </div>
+    }
+
+    @if (Model.Settings.InfoBanner.Length > 0)
+    {
+        <div class="alert alert-danger">
+            @Html.Raw(Model.Settings.InfoBanner)
+        </div>
+    }
+
     <h4>What is this site?</h4>
 
     <p>
@@ -34,7 +48,9 @@
     <h4 id="saturation">What does "instance saturation" mean?</h4>
 
     <p>
-        This instance's saturation level is currently at @Model.Saturation%.<br /><br />
+        This instance's saturation level is currently at @Model.Saturation%.
+
+        <br /><br />
 
         This instance relies on a tool Twitter provides (the API) to fetch Tweets in a predictable and high-quality manner. However, due to limits imposed by Twitter, this instance can only fetch so many Tweets and users per hour.<br /><br />
 

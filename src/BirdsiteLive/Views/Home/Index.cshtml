@@ -19,6 +19,13 @@
 
     <br /><br />
 
+    @if( Model.MaxFollowsPerUser > 0)
+    {
+        <div class="alert alert-warning">
+            In order to keep this service available to everyone, users are only permitted to follow <b>@Model.MaxFollowsPerUser</b> account(s). Any additional follows will be rejected. For more information, see our <a href="/About#saturation">about page</a>.
+        </div>
+    }
+
     @if (Model.InfoBanner.Length > 0)
     {
     <div class="alert alert-danger">

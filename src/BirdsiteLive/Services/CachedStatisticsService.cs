@@ -39,7 +39,8 @@ namespace BirdsiteLive.Services
                 {
                     RefreshedTime = DateTime.UtcNow,
                     Saturation = saturation,
-                    UnlistedUsers = _instanceSettings.UnlistedTwitterAccounts.Length > 0 ? string.Join("\n", _instanceSettings.UnlistedTwitterAccounts.Split(";").Select(i => "<li>" + i + "</li>")) : "(none)"
+                    UnlistedUsers = _instanceSettings.UnlistedTwitterAccounts.Length > 0 ? string.Join("\n", _instanceSettings.UnlistedTwitterAccounts.Split(";").Select(i => "<li>" + i + "</li>")) : "(none)",
+                    Settings = _instanceSettings
                 };
             }
 
@@ -52,5 +53,6 @@ namespace BirdsiteLive.Services
         public DateTime RefreshedTime { get; set; }
         public int Saturation { get; set; }
         public string UnlistedUsers { get; set; }
+        public InstanceSettings Settings { get; set; }
     }
 }
