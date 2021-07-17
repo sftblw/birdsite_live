@@ -38,7 +38,8 @@ namespace BirdsiteLive.Twitter.Extractors
                 IsReply = tweet.InReplyToUserId != null,
                 IsThread = tweet.InReplyToUserId != null && tweet.InReplyToUserId == tweet.CreatedBy.Id,
                 IsRetweet = tweet.IsRetweet || tweet.QuotedStatusId != null,
-                RetweetUrl = ExtractRetweetUrl(tweet)
+                RetweetUrl = ExtractRetweetUrl(tweet),
+                IsSensitive = tweet.PossiblySensitive
             };
 
             return extractedTweet;
@@ -124,6 +125,7 @@ namespace BirdsiteLive.Twitter.Extractors
                 var mediaUrl = GetMediaUrl(m);
                 var mediaType = GetMediaType(m.MediaType, mediaUrl);
                 if (mediaType == null) continue;
+
 
                 var att = new ExtractedMedia
                 {

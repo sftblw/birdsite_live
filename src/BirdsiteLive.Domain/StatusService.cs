@@ -81,10 +81,10 @@ namespace BirdsiteLive.Domain
                 to = new[] { to },
                 cc = cc,
 
-                sensitive = false,
+                sensitive = tweet.IsSensitive,
                 content = $"<p>{content}</p>",
                 attachment = Convert(tweet.Media),
-                tag = extractedTags.tags
+                tag = extractedTags.tags,
             };
 
             return note;
