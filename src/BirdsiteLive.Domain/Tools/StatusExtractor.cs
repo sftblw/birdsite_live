@@ -18,12 +18,14 @@ namespace BirdsiteLive.Domain.Tools
     {
         private readonly InstanceSettings _instanceSettings;
         private readonly ILogger<StatusExtractor> _logger;
+        private readonly IHashflagService _hashflagService;
 
         #region Ctor
-        public StatusExtractor(InstanceSettings instanceSettings, ILogger<StatusExtractor> logger)
+        public StatusExtractor(InstanceSettings instanceSettings, ILogger<StatusExtractor> logger, IHashflagService hashflagService)
         {
             _instanceSettings = instanceSettings;
             _logger = logger;
+            _hashflagService = hashflagService;
         }
         #endregion
 
@@ -82,6 +84,8 @@ namespace BirdsiteLive.Domain.Tools
 
                 var url = $"https://{_instanceSettings.Domain}/tags/{tag}";
 
+                var flagsInPost = new List<string>();
+
                 if (tags.All(x => x.href != url))
                 {
                     tags.Add(new Tag
@@ -90,10 +94,27 @@ namespace BirdsiteLive.Domain.Tools
                         href = url,
                         type = "Hashtag"
                     });
+                    
+                    if(_hashflagService.Hashflags.TryGetValue(tag, out string hashflagUrl))
+                    {
+                        tags.Add(new Tag
+                        {
+                            icon = new TagResource
+                            {
+                                url = hashflagUrl,
+                                type = "Image"
+                            },
+                            id = hashflagUrl,
+                            name = $":{tag}:",
+                            type = "Emoji"
+                        });
+
+                        flagsInPost.Add(tag);
+                    }
                 }
 
                 messageContent = Regex.Replace(messageContent, Regex.Escape(m.Groups[0].ToString()),
-                    $@"{m.Groups[1]}<a href=""{url}"" class=""mention hashtag"" rel=""tag"">#<span>{tag}</span></a>{m.Groups[3]}");
+                    $@"{m.Groups[1]}<a href=""{url}"" class=""mention hashtag"" rel=""tag"">#<span>{tag}</span></a>{(flagsInPost.IndexOf(tag) > -1 ? $" :{tag}:" : "")}{m.Groups[3]}");
             }
 
             // Extract Mentions

@@ -23,5 +23,7 @@
 
         public bool DiscloseInstanceRestrictions { get; set; }
 
+        public bool EnableHashflags { get; set; }
+
     }
 }

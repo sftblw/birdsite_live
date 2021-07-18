@@ -7,6 +7,6 @@ namespace BirdsiteLive.Pipeline.Contracts
 {
     public interface IRetrieveTwitterUsersProcessor
     {
-        Task GetTwitterUsersAsync(BufferBlock<SyncTwitterUser[]> twitterUsersBufferBlock, CancellationToken ct);
+        Task UpdateTwitterAsync(BufferBlock<SyncTwitterUser[]> twitterUsersBufferBlock, CancellationToken ct);
     }
 }

@@ -58,7 +58,7 @@ namespace BirdsiteLive.Pipeline
             sendTweetsToFollowersBufferBlock.LinkTo(saveProgressionBlock, new DataflowLinkOptions { PropagateCompletion = true });
 
             // Launch twitter user retriever
-            var retrieveTwitterAccountsTask = _retrieveTwitterAccountsProcessor.GetTwitterUsersAsync(twitterUsersBufferBlock, ct);
+            var retrieveTwitterAccountsTask = _retrieveTwitterAccountsProcessor.UpdateTwitterAsync(twitterUsersBufferBlock, ct);
 
             // Wait
             await Task.WhenAny(new[] { retrieveTwitterAccountsTask, saveProgressionBlock.Completion });
