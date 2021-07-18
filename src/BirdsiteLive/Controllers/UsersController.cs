@@ -30,16 +30,18 @@ namespace BirdsiteLive.Controllers
         private readonly IUserService _userService;
         private readonly IStatusService _statusService;
         private readonly InstanceSettings _instanceSettings;
+        private readonly IActivityPubService _activityPubService;
         private readonly ILogger<UsersController> _logger;
 
         #region Ctor
-        public UsersController(ITwitterUserService twitterUserService, IUserService userService, IStatusService statusService, InstanceSettings instanceSettings, ITwitterTweetsService twitterTweetService, ILogger<UsersController> logger)
+        public UsersController(ITwitterUserService twitterUserService, IUserService userService, IStatusService statusService, InstanceSettings instanceSettings, ITwitterTweetsService twitterTweetService, IActivityPubService activityPubService, ILogger<UsersController> logger)
         {
             _twitterUserService = twitterUserService;
             _userService = userService;
             _statusService = statusService;
             _instanceSettings = instanceSettings;
             _twitterTweetService = twitterTweetService;
+            _activityPubService = activityPubService;
             _logger = logger;
         }
         #endregion
@@ -187,6 +189,52 @@ namespace BirdsiteLive.Controllers
         private Dictionary<string, string> RequestHeaders(IHeaderDictionary header)
         {
             return header.ToDictionary<KeyValuePair<string, StringValues>, string, string>(h => h.Key.ToLowerInvariant(), h => h.Value);
+        }
+
+        [Route("/users/{actor}/remote_follow")]
+        [HttpPost]
+        public async Task<IActionResult> RemoteFollow(string actor)
+        {
+            StringValues webfingerValues;
+
+            if (!Request.Form.TryGetValue("webfinger", out webfingerValues)) return BadRequest();
+
+            var webfinger = webfingerValues.First();
+
+            if (webfinger.Length < 1 || actor.Length < 1) return BadRequest();
+
+            if (webfinger[0] == '@') webfinger = webfinger[1..];
+
+            if (webfinger.IndexOf("@") < 0 || ! new Regex("^[A-Za-z0-9_]*$").IsMatch(webfinger.Split('@')[0]) || ! new Regex("^[A-Za-z0-9_]*$").IsMatch(actor) || Uri.CheckHostName(webfinger.Split('@')[1]) == UriHostNameType.Unknown)
+            {
+                return BadRequest();
+            }
+
+            WebFingerData webfingerData;
+
+            try
+            {
+                webfingerData = await _activityPubService.WebFinger(webfinger);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError("Could not WebFinger {user}: {exception}", webfinger, e);
+                return NotFound();
+            }
+
+            string redirectLink = "";
+
+            foreach(var link in webfingerData.links)
+            {
+                if(link.rel == "http://ostatus.org/schema/1.0/subscribe" && link.template.Length > 0)
+                {
+                    redirectLink = link.template.Replace("{uri}", "https://" + _instanceSettings.Domain + "/users/" + actor);
+                }
+            }
+
+            if (redirectLink == "") return NotFound();
+
+            return Redirect(redirectLink);
         }
     }
 }
