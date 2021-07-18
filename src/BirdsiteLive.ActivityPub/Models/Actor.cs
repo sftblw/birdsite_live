@@ -1,5 +1,8 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using BirdsiteLive.ActivityPub.Converters;
+using BirdsiteLive.ActivityPub.Models;
 using Newtonsoft.Json;
 
 namespace BirdsiteLive.ActivityPub
@@ -25,5 +28,6 @@ namespace BirdsiteLive.ActivityPub
         public Image image { get; set; }
         public EndPoints endpoints { get; set; }
         public UserAttachment[] attachment { get; set; }
+        public List<Tag> tag;
     }
 }
