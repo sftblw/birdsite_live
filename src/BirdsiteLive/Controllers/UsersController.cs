@@ -80,7 +80,10 @@ namespace BirdsiteLive.Controllers
                 {
                     if (user == null) return NotFound();
                     var apUser = _userService.GetUser(user);
-                    var jsonApUser = JsonConvert.SerializeObject(apUser);
+                    var jsonApUser = JsonConvert.SerializeObject(apUser, new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
                     return Content(jsonApUser, "application/activity+json; charset=utf-8");
                 }
             }
