@@ -53,6 +53,7 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:ShowAboutInstanceOnProfiles` (default: true) show "About [instance name]" on profiles with a link to /About
 * `Instance:MaxFollowsPerUser` (default: 0 - no limit) limit the number of follows per user - any follow count above this number will be Rejected
 * `Instance:DiscloseInstanceRestrictions` (default: false) disclose your instance's restrictions on its About page
+* `Instance:EnableHashflags` (default: false) show hashflags as toot:Emojis next to qualifying hashtags
 
 # Docker Compose full example
 
