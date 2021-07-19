@@ -22,7 +22,7 @@ namespace BirdsiteLive.Pipeline.Tests
             #region Mocks
             var retrieveTwitterUsersProcessor = new Mock<IRetrieveTwitterUsersProcessor>(MockBehavior.Strict);
             retrieveTwitterUsersProcessor
-                .Setup(x => x.UpdateTwitterAsync(
+                .Setup(x => x.GetTwitterUsersAsync(
                     It.IsAny<BufferBlock<SyncTwitterUser[]>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.Delay(0));

@@ -48,7 +48,7 @@ namespace BirdsiteLive.Pipeline.Tests.Processors
 
             var processor = new RetrieveTwitterUsersProcessor(twitterUserDalMock.Object, maxUsersNumberProviderMock.Object, loggerMock.Object);
             processor.WaitFactor = 10;
-            var t = processor.UpdateTwitterAsync(buffer, CancellationToken.None);
+            var t = processor.GetTwitterUsersAsync(buffer, CancellationToken.None);
 
             await Task.WhenAny(t, Task.Delay(50));
 
@@ -95,7 +95,7 @@ namespace BirdsiteLive.Pipeline.Tests.Processors
 
             var processor = new RetrieveTwitterUsersProcessor(twitterUserDalMock.Object, maxUsersNumberProviderMock.Object, loggerMock.Object);
             processor.WaitFactor = 2;
-            var t = processor.UpdateTwitterAsync(buffer, CancellationToken.None);
+            var t = processor.GetTwitterUsersAsync(buffer, CancellationToken.None);
 
             await Task.WhenAny(t, Task.Delay(300));
             
@@ -142,7 +142,7 @@ namespace BirdsiteLive.Pipeline.Tests.Processors
 
             var processor = new RetrieveTwitterUsersProcessor(twitterUserDalMock.Object, maxUsersNumberProviderMock.Object, loggerMock.Object);
             processor.WaitFactor = 2;
-            var t = processor.UpdateTwitterAsync(buffer, CancellationToken.None);
+            var t = processor.GetTwitterUsersAsync(buffer, CancellationToken.None);
             var t2 = Task.Run(async () =>
             {
                 while (buffer.Count < 11)
@@ -186,7 +186,7 @@ namespace BirdsiteLive.Pipeline.Tests.Processors
 
             var processor = new RetrieveTwitterUsersProcessor(twitterUserDalMock.Object, maxUsersNumberProviderMock.Object, loggerMock.Object);
             processor.WaitFactor = 1;
-            var t =processor.UpdateTwitterAsync(buffer, CancellationToken.None);
+            var t =processor.GetTwitterUsersAsync(buffer, CancellationToken.None);
 
             await Task.WhenAny(t, Task.Delay(50));
 
@@ -223,7 +223,7 @@ namespace BirdsiteLive.Pipeline.Tests.Processors
 
             var processor = new RetrieveTwitterUsersProcessor(twitterUserDalMock.Object, maxUsersNumberProviderMock.Object, loggerMock.Object);
             processor.WaitFactor = 10;
-            var t = processor.UpdateTwitterAsync(buffer, CancellationToken.None);
+            var t = processor.GetTwitterUsersAsync(buffer, CancellationToken.None);
 
             await Task.WhenAny(t, Task.Delay(50));
 
@@ -259,7 +259,7 @@ namespace BirdsiteLive.Pipeline.Tests.Processors
 
             var processor = new RetrieveTwitterUsersProcessor(twitterUserDalMock.Object, maxUsersNumberProviderMock.Object, loggerMock.Object);
             processor.WaitFactor = 1;
-            await processor.UpdateTwitterAsync(buffer, canTokenS.Token);
+            await processor.GetTwitterUsersAsync(buffer, canTokenS.Token);
         }
 
         private static async Task<T> DelayFaultedTask<T>(Exception e)

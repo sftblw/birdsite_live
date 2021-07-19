@@ -7,7 +7,6 @@ using BirdsiteLive.Common.Extensions;
 using BirdsiteLive.Common.Settings;
 using BirdsiteLive.DAL.Contracts;
 using BirdsiteLive.DAL.Models;
-using BirdsiteLive.Domain;
 using BirdsiteLive.Pipeline.Contracts;
 using BirdsiteLive.Pipeline.Tools;
 using Microsoft.Extensions.Logging;
@@ -19,23 +18,19 @@ namespace BirdsiteLive.Pipeline.Processors
         private readonly ITwitterUserDal _twitterUserDal;
         private readonly IMaxUsersNumberProvider _maxUsersNumberProvider;
         private readonly ILogger<RetrieveTwitterUsersProcessor> _logger;
-        private readonly IHashflagService _hashflagService;
-        private readonly InstanceSettings _instanceSettings;
-
+        
         public int WaitFactor = 1000 * 60; //1 min
 
         #region Ctor
-        public RetrieveTwitterUsersProcessor(ITwitterUserDal twitterUserDal, IMaxUsersNumberProvider maxUsersNumberProvider, ILogger<RetrieveTwitterUsersProcessor> logger, IHashflagService hashflagService, InstanceSettings instanceSettings)
+        public RetrieveTwitterUsersProcessor(ITwitterUserDal twitterUserDal, IMaxUsersNumberProvider maxUsersNumberProvider, ILogger<RetrieveTwitterUsersProcessor> logger)
         {
             _twitterUserDal = twitterUserDal;
             _maxUsersNumberProvider = maxUsersNumberProvider;
             _logger = logger;
-            _hashflagService = hashflagService;
-            _instanceSettings = instanceSettings;
         }
         #endregion
 
-        public async Task UpdateTwitterAsync(BufferBlock<SyncTwitterUser[]> twitterUsersBufferBlock, CancellationToken ct)
+        public async Task GetTwitterUsersAsync(BufferBlock<SyncTwitterUser[]> twitterUsersBufferBlock, CancellationToken ct)
         {
             for (; ; )
             {
@@ -43,11 +38,6 @@ namespace BirdsiteLive.Pipeline.Processors
 
                 try
                 {
-                    if(_instanceSettings.EnableHashflags)
-                    {
-                        await _hashflagService.ExecuteAsync();
-                    }
-
                     var maxUsersNumber = await _maxUsersNumberProvider.GetMaxUsersNumberAsync();
                     var users = await _twitterUserDal.GetAllTwitterUsersAsync(maxUsersNumber);
 

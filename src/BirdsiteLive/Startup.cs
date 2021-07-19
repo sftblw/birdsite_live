@@ -8,9 +8,7 @@ using BirdsiteLive.Common.Structs;
 using BirdsiteLive.DAL.Contracts;
 using BirdsiteLive.DAL.Postgres.DataAccessLayers;
 using BirdsiteLive.DAL.Postgres.Settings;
-using BirdsiteLive.Domain;
 using BirdsiteLive.Models;
-using BirdsiteLive.Services;
 using BirdsiteLive.Twitter;
 using BirdsiteLive.Twitter.Tools;
 using Lamar;
@@ -57,8 +55,6 @@ namespace BirdsiteLive
 
         public void ConfigureContainer(ServiceRegistry services)
         {
-            services.For<IHashflagService>().Use<HashflagService>().Singleton();
-
             var twitterSettings = Configuration.GetSection("Twitter").Get<TwitterSettings>();
             services.For<TwitterSettings>().Use(x => twitterSettings);
 
@@ -91,7 +87,7 @@ namespace BirdsiteLive
             {
                 throw new NotImplementedException($"{dbSettings.Type} is not supported");
             }
-
+            
             services.For<ITwitterUserService>().DecorateAllWith<CachedTwitterUserService>();
             services.For<ITwitterUserService>().Use<TwitterUserService>().Singleton();
 
