@@ -52,8 +52,8 @@ namespace BirdsiteLive.Domain
             
             string summary = null;
             var sensitive = _publicationRepository.IsSensitive(username);
-            if (sensitive)
-                summary = "Potential Content Warning";
+            if (sensitive || tweet.IsSensitive)
+                summary = "Sensitive Content";
 
             var extractedTags = _statusExtractor.Extract(tweet.MessageContent);
             _statisticsHandler.ExtractedStatus(extractedTags.tags.Count(x => x.type == "Mention"));
