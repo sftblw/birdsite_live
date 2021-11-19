@@ -53,6 +53,9 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:ShowAboutInstanceOnProfiles` (default: true) show "About [instance name]" on profiles with a link to /About
 * `Instance:MaxFollowsPerUser` (default: 0 - no limit) limit the number of follows per user - any follow count above this number will be Rejected
 * `Instance:DiscloseInstanceRestrictions` (default: false) disclose your instance's restrictions on its About page
+* `Instance:UnlistedTwitterAccounts` (default: null) to enable unlisted publication for selected twitter accounts, separated by `;` (please limit this to brands and other public profiles). 
+* `Instance:SensitiveTwitterAccounts` (default: null) mark all media from given accounts as sensitive by default, separated by `;`. 
+* `Instance:FailingTwitterUserCleanUpThreshold` (default: 700) set the max allowed errors (due to a banned/deleted/private account) from a Twitter Account retrieval before auto-removal. (by default an account is called every 15 mins)
 
 # Docker Compose full example
 
@@ -88,6 +91,7 @@ services:
 +           - Instance:TwitterDomainLabel=Nitter
 +           - Instance:InfoBanner=This is my BirdsiteLIVE instance. There are many like it, but this one is mine.
 +           - Instance:ShowAboutInstanceOnProfiles=true
++           - Instance:SensitiveTwitterAccounts=archillect
         networks:
         [...]
 
