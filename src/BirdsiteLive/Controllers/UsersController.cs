@@ -118,6 +118,18 @@ namespace BirdsiteLive.Controllers
                     if (!long.TryParse(statusId, out var parsedStatusId))
                         return NotFound();
 
+                    if (_instanceSettings.MaxStatusFetchAge > 0)
+                    {
+                        // I hate bitwise operators, corn syrup, and the antichrist
+                        // shift 22 bits to the right to get milliseconds, add the twitter epoch, then divide by 1000 to get seconds
+                        long secondsAgo = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - (((parsedStatusId >> 22) + 1288834974657) / 1000);
+
+                        if ( secondsAgo > _instanceSettings.MaxStatusFetchAge*60*60*24 )
+                        {
+                            return new StatusCodeResult(StatusCodes.Status410Gone);
+                        }
+                    }
+
                     var tweet = _twitterTweetService.GetTweet(parsedStatusId);
                     if (tweet == null)
                         return NotFound();

@@ -26,5 +26,7 @@
         public string SensitiveTwitterAccounts { get; set; }
 
         public int FailingTwitterUserCleanUpThreshold { get; set; }
+
+        public int MaxStatusFetchAge { get; set; }
     }
 }

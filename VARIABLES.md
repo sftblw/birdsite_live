@@ -56,6 +56,7 @@ If both whitelisting and blacklisting are set, only the whitelisting will be act
 * `Instance:UnlistedTwitterAccounts` (default: null) to enable unlisted publication for selected twitter accounts, separated by `;` (please limit this to brands and other public profiles). 
 * `Instance:SensitiveTwitterAccounts` (default: null) mark all media from given accounts as sensitive by default, separated by `;`. 
 * `Instance:FailingTwitterUserCleanUpThreshold` (default: 700) set the max allowed errors (due to a banned/deleted/private account) from a Twitter Account retrieval before auto-removal. (by default an account is called every 15 mins)
+* `Instance:MaxStatusFetchAge` (default: 0 - no limit) statuses with a Snowflake older than this age in days will not be fetched by the service and will instead return 410 Gone
 
 # Docker Compose full example
 
