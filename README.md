@@ -1,8 +1,13 @@
 This project is a *fork* of [the original BirdsiteLIVE from NicolasConstant](https://github.com/NicolasConstant/BirdsiteLive). Changes made in this fork include:
 
-* Rework About page
+* Rework About page entirely - also disclose unlisted accounts and federation restrictions
 * Cache Tweets so that, for example, Announces do not hit rate limits
 * Allow replacing and redirecting to twitter.com in Tweets to other domains (i.e. Nitter instances)
+* Verified checkmarks on [verified](https://twitter.com/verified) Twitter users
+* Proper remote follow form on user pages
+* Mark individual Tweets as potentially sensitive
+* Define and enforce a maximum follow count limit
+* Define and enforce a maximum Tweet fetch age using snowflakes
 
 This fork is also available as a Docker image as `pasture/birdsitelive`.
 
