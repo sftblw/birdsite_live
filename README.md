@@ -1,4 +1,4 @@
-This project is a *fork* of [the original BirdsiteLIVE from NicolasConstant](https://github.com/NicolasConstant/BirdsiteLive). Changes made in this fork include:
+This project is a *fork* of [the original BirdsiteLIVE from NicolasConstant](https://github.com/NicolasConstant/BirdsiteLive). This fork runs in production on [a large BirdsiteLIVE instance](https://twtr.plus). Changes made in this fork include:
 
 * Rework About page entirely - also disclose unlisted accounts and federation restrictions
 * Cache Tweets so that, for example, Announces do not hit rate limits
