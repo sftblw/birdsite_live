@@ -39,7 +39,8 @@ namespace BirdsiteLive.Twitter.Extractors
                 IsThread = tweet.InReplyToUserId != null && tweet.InReplyToUserId == tweet.CreatedBy.Id,
                 IsRetweet = tweet.IsRetweet || tweet.QuotedStatusId != null,
                 RetweetUrl = ExtractRetweetUrl(tweet),
-                IsSensitive = tweet.PossiblySensitive
+                IsSensitive = tweet.PossiblySensitive,
+                QuoteTweetUrl = tweet.QuotedStatusId != null ? "https://" + _instanceSettings.Domain + "/users/" + tweet.QuotedTweet.CreatedBy.ScreenName + "/statuses/" + tweet.QuotedStatusId : null
             };
 
             return extractedTweet;
@@ -85,7 +86,11 @@ namespace BirdsiteLive.Twitter.Extractors
                     message = message.Replace(tweetUrl, string.Empty).Trim();
             }
 
-            if (tweet.QuotedTweet != null) message = $"[Quote {{RT}}]{Environment.NewLine}{message}";
+            if (tweet.QuotedTweet != null && ! _instanceSettings.EnableQuoteRT)
+            {
+                message = $"[Quote {{RT}}]{Environment.NewLine}{message}";
+            }
+
             if (tweet.IsRetweet)
             {
                 if (tweet.RetweetedTweet != null && !message.StartsWith("RT"))
@@ -99,16 +104,25 @@ namespace BirdsiteLive.Twitter.Extractors
             // Expand URLs
             foreach (var url in tweet.Urls.OrderByDescending(x => x.URL.Length))
             {
-                var linkUri = new UriBuilder(url.ExpandedURL);
-
-                if (linkUri.Host == "twitter.com")
+                // A bit of a hack
+                if (url.ExpandedURL == tweet.QuotedTweet?.Url && _instanceSettings.EnableQuoteRT)
                 {
-                    linkUri.Host = _instanceSettings.TwitterDomain;
-                    url.ExpandedURL = linkUri.Uri.ToString();
+                    url.ExpandedURL = "";
+                } else
+                {
+                    var linkUri = new UriBuilder(url.ExpandedURL);
+
+                    if (linkUri.Host == "twitter.com")
+                    {
+                        linkUri.Host = _instanceSettings.TwitterDomain;
+                        url.ExpandedURL = linkUri.Uri.ToString();
+                    }
                 }
 
                 message = message.Replace(url.URL, url.ExpandedURL);
             }
+
+            // Hack
 
             return message;
         }

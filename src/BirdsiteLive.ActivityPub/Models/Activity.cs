@@ -17,6 +17,7 @@ namespace BirdsiteLive.ActivityPub
                 { "PropertyValue", "schema:PropertyValue" },
                 { "value", "schema:value" },
                 { "sensitive", "as:sensitive" },
+                { "quoteUrl", "as:quoteUrl" },
 
                 { "schema", "http://schema.org#" },
                 { "toot", "https://joinmastodon.org/ns#" }

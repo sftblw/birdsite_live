@@ -26,5 +26,7 @@ namespace BirdsiteLive.ActivityPub.Models
         public Attachment[] attachment { get; set; }
         public Tag[] tag { get; set; }
         //public Dictionary<string, string> replies;
+
+        public string quoteUrl { get; set; }
     }
 }
