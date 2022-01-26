@@ -8,6 +8,7 @@ This project is a *fork* of [the original BirdsiteLIVE from NicolasConstant](htt
 * Mark individual Tweets as potentially sensitive
 * Define and enforce a maximum follow count limit
 * Define and enforce a maximum Tweet fetch age using snowflakes
+* (Optional) send quote-RTs as Soapbox-style quote posts
 
 This fork is also available as a Docker image as `pasture/birdsitelive`.
 
