@@ -27,6 +27,10 @@
 
         public int FailingTwitterUserCleanUpThreshold { get; set; }
 
+        public int FailingFollowerCleanUpThreshold { get; set; } = -1;
+
+        public int UserCacheCapacity { get; set; }
+
         public int MaxStatusFetchAge { get; set; }
 
         public bool EnableQuoteRT { get; set; }
