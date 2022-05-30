@@ -7,6 +7,7 @@
         public string AdminEmail { get; set; }
         public bool ResolveMentionsInProfiles { get; set; }
         public bool PublishReplies { get; set; }
+        public bool PublishRetweets { get; set; }
         public int MaxUsersCapacity { get; set; }
 
         public string UnlistedTwitterAccounts { get; set; }

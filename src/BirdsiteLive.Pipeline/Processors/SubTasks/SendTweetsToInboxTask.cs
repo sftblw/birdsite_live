@@ -55,10 +55,9 @@ namespace BirdsiteLive.Pipeline.Processors.SubTasks
                 {
                     try
                     {
-                        if (!tweet.IsReply ||
-                            tweet.IsReply && tweet.IsThread ||
-                            _settings.PublishReplies)
-                        {
+                        if (tweet.IsReply && !tweet.IsThread && !_settings.PublishReplies) {
+                        } else if (tweet.IsRetweet && !_settings.PublishRetweets) {
+                        } else {
                             var note = _statusService.GetStatus(user.Acct, tweet);
                             await _activityPubService.PostNewNoteActivity(note, user.Acct, tweet.Id.ToString(), follower.Host, inbox);
                         }
