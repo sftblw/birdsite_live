@@ -109,7 +109,7 @@ namespace BirdsiteLive.Domain
                 return new Attachment
                 {
                     type = "Document",
-                    url = x.Url,
+                    url = x.MediaType.StartsWith("image/") ? (x.Url + ":orig") : x.Url,
                     mediaType = x.MediaType
                 };
             }).ToArray();
